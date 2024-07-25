@@ -20,3 +20,11 @@ export interface ResponsePayload {
 export interface Children{
     children: React.ReactNode
 }
+
+export interface PlayerDetails{
+    _id?: string,
+    first_name: string,
+    last_name: string,
+    gender: string,
+    nationality: string,
+}
