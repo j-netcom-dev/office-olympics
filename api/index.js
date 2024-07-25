@@ -2,7 +2,7 @@ require('dotenv/config');
 const cors =require('cors');
 const express =require('express');
 const mongoose = require('mongoose');
-const { usersRoute } =require('./routes/index.js')
+const { usersRoute, competitionsRoute } =require('./routes/index.js')
 
 const app =express();
 
@@ -18,6 +18,7 @@ const HOST =process.env.HOST || 'localhost';
 
 // routing
 app.use('/users', usersRoute);
+app.use('/competitions', competitionsRoute)
 
 // listen
 app.listen(PORT, HOST, async () =>{
