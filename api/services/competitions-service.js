@@ -11,7 +11,7 @@ class CompetitionService{
             if(competitionFound) return {status: CONFLICT, message: `${name} is already registered`}
             const competition =new Competition({name});
             await competition.save()
-            return {status: CREATED, message: 'Registered'}
+            return {status: CREATED, payload: competition, message: 'Registered'}
         } catch ({message}) {
             return {status: BAD_REQUEST, message}
         }
@@ -19,8 +19,8 @@ class CompetitionService{
 
     static listCompetitions = async () =>{
         try {
-            const competitions =await Competition.find();
-            return {status: OKAY, competitions}
+            const payload =await Competition.find();
+            return {status: OKAY, payload}
         } catch ({message}) {
             return {status: SERVER_ERROR, message}
         }
