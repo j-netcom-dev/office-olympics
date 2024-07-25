@@ -11,8 +11,8 @@ const schema = new mongoose.Schema({
       ref: 'competition',
       required: true
     },
-    predictedWinner: {
-      type: mongoose.MongooseSchema.Types.ObjectId,
+    winner: {
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'player',
       required: true
     },
@@ -22,6 +22,6 @@ const schema = new mongoose.Schema({
     }
   }, { versionKey: false });
   
-  const Prediction = mongoose.model('rrediction', schema);
+  const Prediction = mongoose.model('prediction', schema);
   module.exports =Prediction;
   
