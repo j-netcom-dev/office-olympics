@@ -2,7 +2,7 @@ require('dotenv/config');
 const cors =require('cors');
 const express =require('express');
 const mongoose = require('mongoose');
-const { usersRoute, competitionsRoute } =require('./routes/index.js')
+const { usersRoute, competitionsRoute, playerRoute } =require('./routes/index.js')
 
 const app =express();
 
@@ -16,8 +16,9 @@ const DB_URI =process.env.DB_URI;
 const PORT =process.env.PORT || 5000;
 const HOST =process.env.HOST || 'localhost';
 
-// routing
+// endpoints
 app.use('/users', usersRoute);
+app.use('/players', playerRoute);
 app.use('/competitions', competitionsRoute)
 
 // listen
