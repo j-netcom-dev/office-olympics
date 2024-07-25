@@ -2,7 +2,6 @@ const { PlayerService } =require('../services/player-service.js')
 
 const create =async(req, res) =>{
     const {status, message} =await PlayerService.create(req.body);
-    console.log(status, message);
     return res.status(status).json({message});
 }
 
