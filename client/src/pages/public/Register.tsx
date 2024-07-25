@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Loader } from "../../components";
 import { register } from "../../api/user-api";
 import { useNavigate } from "react-router-dom";
+import { write_to_storage } from "../../storage";
 
 const Register = () => {
   const navigate =useNavigate()
@@ -20,7 +21,10 @@ const Register = () => {
     setIsLoading(true)
     try {
       const {status, message} =await register({first_name: firstName, last_name: lastName});
-      if (status ==201) return  navigate('/', {replace: true})
+      if (status ==201) {
+        write_to_storage('user', {userid: message})
+        return  navigate('/', {replace: true});
+      }
       setServerMsg(message)
     } catch (error: any) {
       let message =null;
