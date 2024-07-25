@@ -2,6 +2,7 @@ require('dotenv/config');
 const cors =require('cors');
 const express =require('express');
 const mongoose = require('mongoose');
+const { usersRoute } =require('./routes/index.js')
 
 const app =express();
 
@@ -14,6 +15,9 @@ app.use(express.urlencoded({extended: true, limit: '30mb'}));
 const DB_URI =process.env.DB_URI;
 const PORT =process.env.PORT || 5000;
 const HOST =process.env.HOST || 'localhost';
+
+// routing
+app.use('/users', usersRoute);
 
 // listen
 app.listen(PORT, HOST, async () =>{
