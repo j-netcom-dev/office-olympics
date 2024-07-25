@@ -10,7 +10,7 @@ class PlayerService{
             if(playerFound) return {status: CONFLICT, message: `Player name ${first_name} ${last_name} already taken`}
             const player =new Player({first_name, last_name, gender, nationality});
             await player.save()
-            return {status: CREATED, message: 'Created'}
+            return {status: CREATED, payload: player, message: 'Created'}
         } catch ({message}) {
             return {status: BAD_REQUEST, message}
         }
@@ -19,7 +19,7 @@ class PlayerService{
     static fetch = async () =>{
         try {
             const players =await Player.find();
-            return {status: OKAY, players}
+            return {status: OKAY, payload: players}
         } catch ({message}) {
             return {status: SERVER_ERROR, message}
         }
