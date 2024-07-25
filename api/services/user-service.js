@@ -10,7 +10,7 @@ class UserService{
             if(userFound) return {status: CONFLICT, message: `Name: ${first_name} ${last_name} already taken`}
             const user =new User({first_name, last_name});
             await user.save()
-            return {status: CREATED, message: 'Created'}
+            return {status: CREATED,  message: user._id}
         } catch ({message}) {
             return {status: BAD_REQUEST, message}
         }
