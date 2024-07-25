@@ -1,10 +1,17 @@
-import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import './App.css';
+import { PublicLayout, RegisterPage } from './pages/public';
 
-function App() {
+const App =() =>{
 
   return (
-    <>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/register' element ={<PublicLayout />}>
+          <Route index element ={<RegisterPage />}/>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
