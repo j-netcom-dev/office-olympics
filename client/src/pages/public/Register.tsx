@@ -21,11 +21,12 @@ const Register = () => {
     try {
       const {status, message} =await register({first_name: firstName, last_name: lastName});
       if (status ==201) return  navigate('/', {replace: true})
-       setServerMsg(message)
+      setServerMsg(message)
     } catch (error: any) {
-      console.log(error);
-      
-      setServerMsg(error?.response? error.response.data :error?.message)
+      let message =null;
+        if(error.response) message =error.response.data.message
+        else message =error?.message
+      setServerMsg(message)
     }finally{
       setIsLoading(false);
     }

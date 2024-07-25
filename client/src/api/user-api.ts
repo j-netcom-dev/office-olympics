@@ -7,6 +7,9 @@ export const register =async (values: RegistrationDetails) =>{
         const {data, status} =await API.post('/users', values);
         return {message: data?.message, status, payload: data?.payload} as ResponsePayload;
     } catch (error: any) {
-        return {message: error?.respose? error.response.data :error?.message, status: error?.status} as ResponsePayload
+        let message =null;
+        if(error.response) message =error.response.data.message
+        else message =error?.message
+        return {message, status: error?.status} as ResponsePayload
     }
 }
