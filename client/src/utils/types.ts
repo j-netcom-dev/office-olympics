@@ -5,10 +5,16 @@ export interface RegistrationDetails {
     last_name: string
 }
 
+export interface CompetitionDetails{
+    name: string,
+    _id?:string
+}
+
+
 export interface ResponsePayload {
     status: number,
     message?: string,
-    payload?: [Record<string, any>]
+    payload?: []
 }
 
 export interface Children{
