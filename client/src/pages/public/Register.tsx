@@ -56,7 +56,7 @@ const Register = () => {
         </div>
         <small className="text-gray-600"><i>Powered by office olympics</i></small>
       </section>
-      {serverMsg && <p className="rounded text-sm p-4 text-left w-[500px] bg-red-100 text-red-500">{serverMsg}</p>}
+      {serverMsg && <p className="rounded text-sm p-4 text-left lg:w-[500px] bg-red-100 text-red-500">{serverMsg}</p>}
     </div>
   )
 }

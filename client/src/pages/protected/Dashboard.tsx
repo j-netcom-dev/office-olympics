@@ -70,7 +70,7 @@ const Dashboard = () => {
     <div className="grid grid-cols-1 lg:grid-cols-2 px-4 md:px-8">
       <section className="flex flex-col gap-8">
         <h3 className="font-semibold text-xl uppercase">Join the competition</h3>
-        {serverMsg && <p className="flex-1 rounded text-sm p-4 text-left w-[500px] bg-blue-200 text-blue-600">{serverMsg}</p>}
+        {serverMsg && <p className="flex-1 rounded text-sm p-4 text-left lg:w-[500px] bg-blue-200 text-blue-600">{serverMsg}</p>}
         <div className="flex flex-col gap-2">
             <label className="text-sm font-medium text-[#333]">Select competition</label>
             <select ref={competitionRef} className="border outline-none block px-4 py-2 rounded-md cursor-pointer bg-white" onChange={e =>selectCompetition(e.target.value)}>
