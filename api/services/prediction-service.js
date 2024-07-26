@@ -22,6 +22,17 @@ class PredictionService{
             return {status: SERVER_ERROR, message}
         }
     }
+
+    static getUserPredictions =async ({user}) =>{
+        try {
+            const payload =await Prediction.find({user})
+            .populate('competition')
+            .populate('winner');
+            return {status: OKAY, payload}
+        } catch ({message}) {
+            return {status: SERVER_ERROR, message}
+        }
+    }
 }
 
 module.exports ={ PredictionService };

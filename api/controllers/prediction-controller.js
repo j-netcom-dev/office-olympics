@@ -10,6 +10,11 @@ const list =async(_, res) =>{
     return res.status(status).json({message, predictions});
 }
 
+const getUserPredictions = async (req, res) =>{
+    const {status, message, payload} =await PredictionService.getUserPredictions(req.params);
+    return res.status(status).json({message, payload});
+}
+
 module.exports ={
-    create, list
+    create, list, getUserPredictions
 }
