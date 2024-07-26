@@ -15,7 +15,7 @@ const Layout = () => {
                 <strong className="text-xl font-bold uppercase text-blue-600 cursor-default">Office Olympics</strong>
                 <nav className="flex gap-8 items-center uppercase">
                     <NavLink to={'/'} className="py-5 text-base font-semibold hover:text-blue-500 transition-all">Dashboard</NavLink>
-                    <NavLink to={'/leaderboard'} className="py-5 text-base font-semibold hover:text-blue-500 transition-all">Leaderboard</NavLink>
+                    {/* <NavLink to={'/leaderboard'} className="py-5 text-base font-semibold hover:text-blue-500 transition-all">Leaderboard</NavLink> */}
                 </nav>
             </header>
             <Outlet />
