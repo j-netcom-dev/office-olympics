@@ -45,3 +45,10 @@ export interface predictionHistory{
     prediction: string,
     winner: string | null
 }
+
+export interface LeaderDetails {
+    points: number,
+    last_name: string,
+    first_name: string,
+    competitions: number,
+}
