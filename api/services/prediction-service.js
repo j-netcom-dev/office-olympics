@@ -20,7 +20,13 @@ class PredictionService{
         try {
             const payload =await Prediction.find()
             .populate('user')
-            .populate('competition')
+            .populate({
+                path: 'competition',
+                populate: {
+                    path: 'winer',
+                    model: 'user'
+                }
+            })
             .populate('winner');
             return {status: OKAY, payload}
         } catch ({message}) {
@@ -31,7 +37,13 @@ class PredictionService{
     static getUserPredictions =async ({user}) =>{
         try {
             const payload =await Prediction.find({user})
-            .populate('competition')
+            .populate({
+                path: 'competition',
+                populate: {
+                    path: 'winner',
+                    model: 'player'
+                }
+            })
             .populate('winner');
             return {status: OKAY, payload}
         } catch ({message}) {
