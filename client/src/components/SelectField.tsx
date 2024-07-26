@@ -3,11 +3,15 @@ import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useRef, useState } from 'react';
 import { OptionProps } from '../utils/types';
 
-const SelectField = ({placeholder, disabled =false, onChange, multiple =false, itemsName ='', data =[]}: {itemsName?: string, onChange: Function, disabled?:boolean, placeholder?:string, multiple?:boolean, data: OptionProps[]}) => {
+const SelectField = ({placeholder, reset =false,  disabled =false, onChange, multiple =false, itemsName ='', data =[]}: {itemsName?: string, onChange: Function, reset?:boolean, disabled?:boolean, placeholder?:string, multiple?:boolean, data: OptionProps[]}) => {
     
     const [showDropdown, setShowDropdown] =useState(false);
     const [selectedItems, setSelectedItems] = useState<OptionProps[]>([]);
     const dropdownRef = useRef(null);
+
+    useEffect(() =>{
+        if(reset) setSelectedItems([])
+    }, [reset])
 
     useEffect(() => {
         const handleClickOutside = (event: { target: any; }) => {
@@ -36,7 +40,7 @@ const SelectField = ({placeholder, disabled =false, onChange, multiple =false, i
             });
             const values =selectedItems.map((item: OptionProps) =>item.value)
             return onChange(values.includes(value)? values.filter(val =>val !==value): [...values, value])
-
+            
         }
         setSelectedItems([{value, label}])
         setShowDropdown(false);
@@ -49,7 +53,7 @@ const SelectField = ({placeholder, disabled =false, onChange, multiple =false, i
                 {selectedItems.length? selectedItems.length <4? selectedItems.map(item => item.label).join(', '): `${selectedItems.length} ${itemsName} selected`: <span className='text-zinc-600'>{placeholder}</span>}
                 <FontAwesomeIcon icon={showDropdown || disabled? faAngleUp:faAngleDown}/>
             </div>
-            <ul className={`bg-white pt-0 p-4 border border-t-0 ${(showDropdown && data.length) && !disabled? '': 'hidden'} select-none rounded max-h-[250px] absolute w-full overflow-auto`}>
+            <ul className={`bg-white z-10 pt-0 p-4 border border-t-0 ${(showDropdown && data.length) && !disabled? '': 'hidden'} select-none rounded max-h-[250px] absolute w-full overflow-auto`}>
                 {data.map(({value, label}, index: number) =>(<li key={index} className='flex items-center gap-3 p-4 rounded cursor-pointer hover:bg-zinc-200' onClick={() =>handleItemClick(value, label)}>
                     <input type='checkbox' className='cursor-pointer' value={value}
                         checked={selectedItems.some(item => item.value === value)}

@@ -15,6 +15,8 @@ const Competition = () => {
     const [addingParticipant, setAddingParticipant] =useState(false);
     const [winner, setWinner] =useState<string>('');
     const [addingWinner, setAddingWinner] =useState(false);
+    const [resetWinner, setResetWinner] =useState(false);
+    const [resetPartcipants, setResetParticipants] =useState(false);
     useEffect(() =>{
         (async () =>{
             try {
@@ -23,7 +25,6 @@ const Competition = () => {
                     console.log(message);
                     return
                 }
-                console.log(payload);
                 
                 setCompetition(payload)
                 
@@ -58,7 +59,7 @@ const Competition = () => {
             }
             
             setServerMsg(`${newParticipants.length} Participant(s) added successfully`)
-            setNewParticipants([])
+            setResetParticipants(true)
             
         } catch (error:any) {
             let message =null;
@@ -80,6 +81,7 @@ const Competition = () => {
             }
             
             setServerMsg(`Winner set successfully`)
+            setResetWinner(true)
             
         } catch (error:any) {
             let message =null;
@@ -104,14 +106,14 @@ const Competition = () => {
                 <div className="flex-1 flex gap-4 flex-col">
                     <h2 className="font-semibold uppercase">Add a Participant</h2>
                     <div className="flex flex-col gap-6">
-                        <SelectField disabled ={competition?.winner} multiple onChange={setNewParticipants} placeholder="Select participants" itemsName="participants" data={[...participants.map((participant:PlayerDetails) =>({value: participant._id, label: `${participant.first_name} ${participant.last_name} - ${participant.nationality}`}))]}/>
+                        <SelectField reset ={resetPartcipants} disabled ={competition?.winner} multiple onChange={setNewParticipants} placeholder="Select participants" itemsName="participants" data={[...participants.map((participant:PlayerDetails) =>({value: participant._id, label: `${participant.first_name} ${participant.last_name} - ${participant.nationality}`}))]}/>
                         {addingParticipant? <Loader /> :(<button onClick={updateParticipants} disabled ={!newParticipants.length || competition?.winner} className="block text-white w-1/2 transition bg-slate-700 disabled:bg-slate-300 rounded px-8 py-2 hover:bg-slate-900">Add</button>)}
                     </div>
                 </div>
                 <div className="flex-1 flex gap-4 flex-col">
                     <h2 className="font-semibold uppercase">Set winner</h2>
                     <div className="flex flex-col gap-6">
-                    <SelectField onChange={setWinner} disabled ={competition?.winner} placeholder="Select competition winner" data={competition.participants?[...competition.participants?.map((participant:PlayerDetails) =>({value: participant._id, label: `${participant.first_name} ${participant.last_name} - ${participant.nationality}`}))]: []}/>
+                    <SelectField reset ={resetWinner} onChange={setWinner} disabled ={competition?.winner} placeholder="Select competition winner" data={competition.participants?[...competition.participants?.map((participant:PlayerDetails) =>({value: participant._id, label: `${participant.first_name} ${participant.last_name} - ${participant.nationality}`}))]: []}/>
                         {addingWinner? <Loader /> :(<button onClick={declareWinner} disabled ={!winner || competition?.winner} className="block text-white w-1/2 transition bg-slate-700 disabled:bg-slate-300 rounded px-8 py-2 hover:bg-slate-900">Save</button>)}
                       
                     </div>
