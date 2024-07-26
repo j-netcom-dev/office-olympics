@@ -28,3 +28,9 @@ export interface PlayerDetails{
     gender: string,
     nationality: string,
 }
+
+export interface PredictionDetails{
+    user: string,
+    competition: string,
+    winner: string,
+}
