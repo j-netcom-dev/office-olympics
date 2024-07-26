@@ -1,6 +1,6 @@
 const Competition =require('../models/competition-model.js');
 
-const { BAD_REQUEST, CREATED, CONFLICT, OKAY, SERVER_ERROR } =require('../constants.js')
+const { BAD_REQUEST, CREATED, CONFLICT, OKAY, SERVER_ERROR, NOT_FOUND } =require('../constants.js')
 
 class CompetitionService{
 
@@ -21,6 +21,16 @@ class CompetitionService{
         try {
             const payload =await Competition.find();
             return {status: OKAY, payload}
+        } catch ({message}) {
+            return {status: SERVER_ERROR, message}
+        }
+    }
+    static getCompetitionByID =async ({_id}) =>{
+        try {
+            const payload =await Competition.findById({_id});
+            if(payload) return {status: OKAY, payload}
+            return {status: NOT_FOUND, message: 'Competition not found.'}
+            
         } catch ({message}) {
             return {status: SERVER_ERROR, message}
         }

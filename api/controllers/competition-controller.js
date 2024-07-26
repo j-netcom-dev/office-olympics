@@ -10,6 +10,10 @@ const list =async(req, res) =>{
     return res.status(status).json({message, payload});
 }
 
+const get =async (req, res) => {
+    const {status, message, payload} =await CompetitionService.getCompetitionByID(req.params)
+    return res.status(status).json({message, payload});
+}
 module.exports ={
-    create, list
+    create, list, get
 }
