@@ -67,7 +67,7 @@ const Dashboard = () => {
     })();
   }, []);
   return (
-    <div className="grid grid-cols-2 px-8">
+    <div className="grid grid-cols-1 lg:grid-cols-2 px-4 md:px-8">
       <section className="flex flex-col gap-8">
         <h3 className="font-semibold text-xl uppercase">Join the competition</h3>
         {serverMsg && <p className="flex-1 rounded text-sm p-4 text-left w-[500px] bg-blue-200 text-blue-600">{serverMsg}</p>}
