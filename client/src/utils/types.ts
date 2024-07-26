@@ -34,3 +34,8 @@ export interface PredictionDetails{
     competition: string,
     winner: string,
 }
+
+export interface OptionProps {
+    value:string,
+    label:string,
+}
