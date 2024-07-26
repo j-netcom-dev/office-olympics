@@ -6,8 +6,8 @@ const create =async(req, res) =>{
 }
 
 const list =async(_, res) =>{
-    const {status, message, predictions} =await PredictionService.fetch()
-    return res.status(status).json({message, predictions});
+    const {status, message, payload} =await PredictionService.fetch()
+    return res.status(status).json({message, payload});
 }
 
 const getUserPredictions = async (req, res) =>{

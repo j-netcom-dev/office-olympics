@@ -16,8 +16,10 @@ class PredictionService{
 
     static fetch = async () =>{
         try {
-            const predictions =await Prediction.find();
-            return {status: OKAY, predictions}
+            const payload =await Prediction.find()
+            .populate('competition')
+            .populate('winner');
+            return {status: OKAY, payload}
         } catch ({message}) {
             return {status: SERVER_ERROR, message}
         }
