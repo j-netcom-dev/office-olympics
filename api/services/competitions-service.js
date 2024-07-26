@@ -19,7 +19,9 @@ class CompetitionService{
 
     static listCompetitions = async () =>{
         try {
-            const payload =await Competition.find();
+            const payload =await Competition.find()
+            .populate('participants') 
+            .populate('winner');
             return {status: OKAY, payload}
         } catch ({message}) {
             return {status: SERVER_ERROR, message}
@@ -27,9 +29,39 @@ class CompetitionService{
     }
     static getCompetitionByID =async ({_id}) =>{
         try {
-            const payload =await Competition.findById({_id});
+            const payload =await Competition.findById(_id)
+            .populate('participants') 
+            .populate('winner');
             if(payload) return {status: OKAY, payload}
             return {status: NOT_FOUND, message: 'Competition not found.'}
+            
+        } catch ({message}) {
+            return {status: SERVER_ERROR, message}
+        }
+    }
+    static updateParticipants =async ({competition_id, participant_id}) =>{
+        try {
+            const payload =await Competition.findById(competition_id);
+            if(!payload) return {status: NOT_FOUND, message: 'Competition not found.'}
+            if (payload.participants.includes(participant_id)) 
+                return { status: CONFLICT, message: `Player is already a participant` };
+
+            payload.participants.push(participant_id);
+            await payload.save();
+            return {status: OKAY, payload}
+            
+        } catch ({message}) {
+            return {status: SERVER_ERROR, message}
+        }
+    }
+    static setWinner =async ({competition_id, participant_id}) =>{
+        try {
+            const payload =await Competition.findById(competition_id);
+            if(!payload) return {status: NOT_FOUND, message: 'Competition not found.'}
+            
+            payload.winner = participant_id;
+            await payload.save();
+            return {status: OKAY, payload}
             
         } catch ({message}) {
             return {status: SERVER_ERROR, message}

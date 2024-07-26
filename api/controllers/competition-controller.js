@@ -14,6 +14,18 @@ const get =async (req, res) => {
     const {status, message, payload} =await CompetitionService.getCompetitionByID(req.params)
     return res.status(status).json({message, payload});
 }
+const updateParticipants =async (req, res) =>{
+    const {status, message, payload} =await CompetitionService.updateParticipants(req.params)
+    return res.status(status).json({message, payload});
+    
+}
+
+const setWinner =async (req, res) =>{
+    const {status, message, payload} =await CompetitionService.setWinner(req.params)
+    return res.status(status).json({message, payload});
+    
+}
 module.exports ={
-    create, list, get
+    create, list, get,
+    updateParticipants, setWinner
 }
