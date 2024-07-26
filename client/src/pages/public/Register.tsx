@@ -42,7 +42,7 @@ const Register = () => {
   return (
     <div className="h-[100svh] flex md:justify-center items-center flex-col bg-slate-100 gap-4 md:p-0">
       <section className="md:shadow h-full md:h-auto p-8 rounded-md bg-white flex flex-col gap-4 w-full md:w-[500px]">
-        <h2 className="text-xl font-semibold uppercase">Creat account</h2>
+        <h2 className="text-xl font-semibold uppercase">Join the competition</h2>
         <div className="flex flex-col gap-2">
             <label className="text-sm font-medium text-[#333]">First name</label>
             <input className="border outline-none block px-4 py-2 rounded-md" onChange={e =>updateEntry(e.target.value, setFirstName)} placeholder="Enter first name" disabled ={isLoading}/>
