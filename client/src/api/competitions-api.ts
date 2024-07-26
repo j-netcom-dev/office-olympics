@@ -24,3 +24,15 @@ export const fetch =async () =>{
         return {message, status: error?.status} as ResponsePayload
     }
 }
+
+export const get =async (_id: string) =>{
+    try {
+        const {data, status} =await API.get(`/competitions/get/${_id}`);
+        return {message: data?.message, status, payload: data?.payload} as ResponsePayload;
+    } catch (error: any) {
+        let message =null;
+        if(error.response) message =error.response.data.message
+        else message =error?.message
+        return {message, status: error?.status} as ResponsePayload
+    }
+}

@@ -1,13 +1,33 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import { get } from "../../api/competitions-api";
+import { useParams } from "react-router-dom";
 
 const Competition = () => {
+    const params =useParams();
+    const [competition, setCompetition] =useState<any>({});
     useEffect(() =>{
-
-    })
+        (async () =>{
+            try {
+                const {status, payload, message} =await get(params?.id || '')
+                if(status !==200){
+                    console.log(message);
+                    return
+                }
+                setCompetition(payload)
+                
+            } catch (error:any) {
+                let message =null;
+                if(error.response) message =error.response.data.message
+                else message =error?.message
+                console.log(message);
+                
+            }
+        })();
+    }, [])
     return (
         <div className="px-8 flex flex-col gap-8 pb-8">
             <section className="flex h-[200px] w-full items-center justify-center bg-white rounded-md">
-                <h2 className="uppercase font-bold text-2xl">Competition name</h2>
+                <h2 className="uppercase font-bold text-2xl">{competition?.name || 'Competition'}</h2>
             </section>
             <section className="flex items-start justify-between gap-12 cursor-pointer">
                 <div className="flex-1 flex gap-4 flex-col">
@@ -22,7 +42,7 @@ const Competition = () => {
                     <h2 className="font-semibold uppercase">Set winner</h2>
                     <div className="flex flex-col gap-6">
                         <select className="border block w-full px-4 py-2 bg-white rounded cursor-pointer">
-                            <option value={''} selected disabled>Select competition winner</option>
+                            <option value={''} >Select competition winner</option>
                         </select>
                         <button className="block text-white w-1/2 transition bg-slate-700 disabled:bg-slate-300 rounded  py-2 hover:bg-slate-900">Set</button>
                     </div>
