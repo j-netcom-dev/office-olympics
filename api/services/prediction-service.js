@@ -17,6 +17,7 @@ class PredictionService{
     static fetch = async () =>{
         try {
             const payload =await Prediction.find()
+            .populate('user')
             .populate('competition')
             .populate('winner');
             return {status: OKAY, payload}
