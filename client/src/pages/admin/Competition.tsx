@@ -1,4 +1,4 @@
-import { Loader } from "../../components";
+import { Loader, SelectField } from "../../components";
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
 import { fetch } from "../../api/player-api";
@@ -11,7 +11,7 @@ const Competition = () => {
     const [competition, setCompetition] =useState<any>({});
     const [serverMsg, setServerMsg] = useState<string>('');
     const [participants, setParticipants] =useState<any>([]);
-    const [newParticipant, setNewParticipant] =useState<string>('');
+    const [newParticipants, setNewParticipants] =useState<string[]>([]);
     const [addingParticipant, setAddingParticipant] =useState(false);
     const [winner, setWinner] =useState<string>('');
     const [addingWinner, setAddingWinner] =useState(false);
@@ -23,6 +23,8 @@ const Competition = () => {
                     console.log(message);
                     return
                 }
+                console.log(payload);
+                
                 setCompetition(payload)
                 
             } catch (error:any) {
@@ -50,13 +52,13 @@ const Competition = () => {
     const updateParticipants =async ()=>{
         setAddingParticipant(true)
         try {
-            const {status, message} =await addParticipant(params?.id || '', newParticipant)
-            if(status !==200){
-                setServerMsg(message || 'An error occureed');
-                return
+            for(let newParticipant of newParticipants){
+                const {status, message} =await addParticipant(params?.id || '', newParticipant)
+                if(status !==200) setServerMsg(message || 'An error occureed');
             }
             
-            setServerMsg(`Participant added successfully`)
+            setServerMsg(`${newParticipants.length} Participant(s) added successfully`)
+            setNewParticipants([])
             
         } catch (error:any) {
             let message =null;
@@ -89,6 +91,7 @@ const Competition = () => {
             setAddingWinner(false)
         }
     }
+
     return (
         <div className="px-8 flex flex-col gap-8 pb-8">
             <section className="flex h-[200px] w-full items-center justify-center bg-white rounded-md">
@@ -101,20 +104,14 @@ const Competition = () => {
                 <div className="flex-1 flex gap-4 flex-col">
                     <h2 className="font-semibold uppercase">Add a Participant</h2>
                     <div className="flex flex-col gap-6">
-                        <select disabled ={competition?.winner} className="border block w-full px-4 py-2 bg-white rounded cursor-pointer" onChange={e =>setNewParticipant(e.target.value)}>
-                            <option value={''} >Select a participant</option> 
-                            {participants.map((participant:PlayerDetails, index:number) =>(<option key={index} value={participant._id}>{participant.first_name} {participant.last_name} - {participant.nationality}</option>))}
-                        </select>
-                        {addingParticipant? <Loader /> :(<button onClick={updateParticipants} disabled ={!newParticipant || competition?.winner} className="block text-white w-1/2 transition bg-slate-700 disabled:bg-slate-300 rounded px-8 py-2 hover:bg-slate-900">Add</button>)}
+                        <SelectField disabled ={competition?.winner} multiple onChange={setNewParticipants} placeholder="Select participants" itemsName="participants" data={[...participants.map((participant:PlayerDetails) =>({value: participant._id, label: `${participant.first_name} ${participant.last_name} - ${participant.nationality}`}))]}/>
+                        {addingParticipant? <Loader /> :(<button onClick={updateParticipants} disabled ={!newParticipants.length || competition?.winner} className="block text-white w-1/2 transition bg-slate-700 disabled:bg-slate-300 rounded px-8 py-2 hover:bg-slate-900">Add</button>)}
                     </div>
                 </div>
                 <div className="flex-1 flex gap-4 flex-col">
                     <h2 className="font-semibold uppercase">Set winner</h2>
                     <div className="flex flex-col gap-6">
-                        <select disabled ={competition?.winner} className="border block w-full px-4 py-2 bg-white rounded cursor-pointer" onChange={e =>setWinner(e.target.value)}>
-                            <option value={''} >Select competition winner</option>
-                            {competition?.participants?.map((participant:PlayerDetails, index:number) =>(<option key={index} value={participant._id}>{participant.first_name} {participant.last_name} - {participant.nationality}</option>))}
-                        </select>
+                    <SelectField onChange={setWinner} disabled ={!winner || competition?.winner} placeholder="Select competition winner" data={competition.participants?[...competition.participants?.map((participant:PlayerDetails) =>({value: participant._id, label: `${participant.first_name} ${participant.last_name} - ${participant.nationality}`}))]: []}/>
                         {addingWinner? <Loader /> :(<button onClick={declareWinner} disabled ={!winner || competition?.winner} className="block text-white w-1/2 transition bg-slate-700 disabled:bg-slate-300 rounded px-8 py-2 hover:bg-slate-900">Save</button>)}
                       
                     </div>
