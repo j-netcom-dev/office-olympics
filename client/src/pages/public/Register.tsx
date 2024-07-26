@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader } from "../../components";
 import { register } from "../../api/user-api";
 import { useNavigate } from "react-router-dom";
-import { write_to_storage } from "../../storage";
+import { read_from_storage, write_to_storage } from "../../storage";
 
 const Register = () => {
   const navigate =useNavigate()
@@ -35,6 +35,10 @@ const Register = () => {
       setIsLoading(false);
     }
   }
+  useEffect(() =>{
+    const {userid} =read_from_storage('user');
+    if(userid) return  navigate('/', {replace: true});
+  }, [])
   return (
     <div className="h-[100svh] flex justify-center items-center flex-col bg-slate-100 gap-4">
       <section className="shadow p-8 rounded-md bg-white flex flex-col gap-4 w-[500px]">
