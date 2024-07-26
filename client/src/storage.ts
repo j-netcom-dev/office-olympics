@@ -3,5 +3,5 @@ export const write_to_storage =(key:string, data:Record<string, any>) =>{
 }
 
 export const read_from_storage =(key:string) =>{
-    return JSON.parse(localStorage.getItem(key) || JSON.stringify(null))
+    return JSON.parse(localStorage.getItem(key) || JSON.stringify({}))
 }
