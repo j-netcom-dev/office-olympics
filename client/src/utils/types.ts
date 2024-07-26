@@ -39,3 +39,9 @@ export interface OptionProps {
     value:string,
     label:string,
 }
+
+export interface predictionHistory{
+    competition: string,
+    prediction: string,
+    winner: string | null
+}
