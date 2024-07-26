@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import { PublicLayout, RegisterPage } from './pages/public';
 import { Dashboard, LeaderBoard, ProtectedLayout } from './pages/protected';
-import { AdminLayout, Competitions, Players } from './pages/admin';
+import { AdminLayout, Competition, Competitions, Players } from './pages/admin';
 
 const App =() =>{
 
@@ -19,6 +19,7 @@ const App =() =>{
         <Route path='/admin' element ={<AdminLayout />}>
           <Route index element ={<Competitions />}/>
           <Route path='players' element ={<Players />}/>
+          <Route path='competition/:id' element ={<Competition />}/>
         </Route>
       </Routes>
     </BrowserRouter>
