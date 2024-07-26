@@ -1,1 +1,1 @@
-export const API_URL ='https://office-olympics.onrender.com/';
+export const API_URL ='https://office-olympics.onrender.com/'

@@ -18,7 +18,6 @@ const Players = () => {
     try {
         const {status, message, payload} =await save({first_name: firstName, last_name: lastName, gender, nationality});
         if (status ==201) {
-          console.log(players);
           
             setPlayers([...players, payload])
             setServerMsg(`${firstName} ${lastName} registered successfully`)
